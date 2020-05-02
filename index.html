@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Animation</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <section>
+        <h1 class="anim">Well hello there</h1>
+    </section>
+    <section>
+        <img class="anim"
+            src="https://scontent.fktm8-1.fna.fbcdn.net/v/t1.0-9/50295321_955655441300530_1311937145413304320_n.jpg?_nc_cat=104&_nc_sid=110474&_nc_ohc=ULqVPBOCGmkAX_pYeVW&_nc_ht=scontent.fktm8-1.fna&oh=8709fd1dff9c474b7d708ffbce24a6c8&oe=5ED15EFB"
+            alt="image">
+        <h1 class="anim">Hey look it's me</h1>
+    </section>
+    <section>
+        <h1 class="anim">K, Bye </h1>
+    </section>
+    <section>
+        <h1 class="anim">Close this window now </h1>
+    </section>
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+        <style type="text/css">
+            .text {
+                text-transform: uppercase;
+                font-weight: bold;
+                fill: #e6e6e6;
+            }
+        </style>
+        <path id="our-text" fill="#fff" d="M27.5 26.9v450h447.1v-450H37.7" />
+        <text y="40" font-size="30" font-family="Cera Pro">
+            <textPath id="text-path" class="text" href="#our-text" startOffset="400">
+                Oh my God. I am scrolling out here. Notice me Senpai
+            </textPath>
+        </text>
+    </svg>
+
+    <script>
+        var textPath = document.querySelector('#text-path');
+
+        function updateTextPathOffset(offset) {
+            textPath.setAttribute('startOffset', offset)
+        }
+
+        function onScroll() {
+            requestAnimationFrame(function () {
+                updateTextPathOffset(window.scrollY * .8)
+            })
+        }
+
+        window.addEventListener('scroll', onScroll);
+
+        const titles = document.querySelectorAll('.anim');
+
+        observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting == true) {
+                    entry.target.classList.add('animate');
+                } else {
+                    entry.target.classList.remove('animate');
+                }
+            })
+        })
+
+        titles.forEach(title => {
+            observer.observe(title);
+        })
+    </script>
+</body>
+
+</html>
